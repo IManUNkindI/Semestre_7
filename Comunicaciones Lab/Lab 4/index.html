@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valor del Potenciómetro</title>
+    <script>
+        function actualizarValor() {
+            // Realizar una solicitud AJAX para obtener el valor del servidor
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Actualizar el contenido del elemento con el nuevo valor
+                    document.getElementById("valorPot").innerText = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "valor_potenciometro.txt", true); // Cambia esto según la ruta de tu servidor
+            xhr.send();
+        }
+
+        // Actualizar el valor cada segundo
+        setInterval(actualizarValor, 1000);
+    </script>
+</head>
+<body>
+    <h1>Valor del Potenciómetro</h1>
+    <p>El valor actual del potenciómetro es: <span id="valorPot">---</span></p>
+    <h2>Enviar número entero a ESP32</h2>
+    <form action="enviar_numero.php" method="post">
+        <label for="numero">Ingrese un número entero:</label><br>
+        <input type="number" id="numero" name="numero" required><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
